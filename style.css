@@ -1,0 +1,15 @@
+#wrapper {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#title {
+    border: 1px solid black;
+}
+
+#calculator {
+    border: 1px solid black;
+}
+
