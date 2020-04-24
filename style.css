@@ -15,8 +15,15 @@
 }
 
 #calculator {
+    display: grid;
     height: 60vh;
     width: 50vh;
+    border: 1px solid black;
+    grid-template-rows: repeat(8, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#calculator > div {
     border: 1px solid black;
 }
 
