@@ -19,7 +19,7 @@
     height: 60vh;
     width: 50vh;
     border: 1px solid black;
-    grid-template-rows: repeat(8, 1fr);
+    grid-template-rows: repeat(7, 1fr);
     grid-template-columns: repeat(4, 1fr);
 }
 
@@ -27,3 +27,17 @@
     border: 1px solid black;
 }
 
+#display {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+#backspace {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+#zero {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
