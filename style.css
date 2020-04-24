@@ -2,14 +2,21 @@
     border: 1px solid black;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 98vh;
+    margin: 0;
 
 }
 
 #title {
     border: 1px solid black;
+    height: 20vh;
 }
 
 #calculator {
+    height: 60vh;
+    width: 50vh;
     border: 1px solid black;
 }
 
