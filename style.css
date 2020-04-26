@@ -23,7 +23,7 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
-#calculator > div {
+#calculator>div {
     border: 1px solid black;
 }
 
