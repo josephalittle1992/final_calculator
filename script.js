@@ -1,9 +1,12 @@
 let numBtns = document.querySelectorAll('[data-number]');
 let displaySpan = document.getElementById('display');
 let disUpValue = ''; //displayUpdate() var
-let operating = ''; //stores 1st number of calculation when
+let operating = []; //stores number for calculation when
                     //operator user presses '='
-let operator = ''; //operator chosen for calculation
+let operator = '';
+let result = '';
+
+
 
 //number buttons
 numBtns.forEach(btn => {
@@ -12,21 +15,40 @@ numBtns.forEach(btn => {
     });
 });
 
-
-//clear button
-document.getElementById('clear').addEventListener('click', () => {
-    disUpValue = '';
-    displaySpan.innerHTML = '';
-});
-
 //lets multiple numbers be added to display span
 function displayUpdate(value) {
     disUpValue = disUpValue.concat(value);
     displaySpan.innerHTML = disUpValue;
 }
 
+
+//clear button
+document.getElementById('clear').addEventListener('click', () => {
+    disUpValue = '';
+    displaySpan.innerHTML = '';
+    operating = [];
+});
+
+//equals button
+document.getElementById('equals').addEventListener('click', () => {
+
+});
+
+//addition button
+document.getElementById('plus').addEventListener('click', () => {
+
+});
+
+
+
+function operate(op, num1, num2) {
+    switch (op) {
+        case 'plus':
+    }
+}
+
 function add(a, b) {
-    return a + b;
+    return parseInt(a, 10) + parseInt(b, 10);
 }
 
 function subtract() {
@@ -41,11 +63,7 @@ function divide() {
 
 }
 
-function operate(operator, num1, num2) {
-    //Create a new function operate that takes an operator 
-    //and 2 numbers and then calls one of the above 
-    //functions on the numbers.
-}
+
 
 function init() {
 
