@@ -1,32 +1,47 @@
 let numBtns = document.querySelectorAll('[data-number]');
 let displaySpan = document.getElementById('display');
-let disUpValue = ''; //displayUpdate() var
-let operating = []; //stores number for calculation when
-                    //operator user presses '='
-let operator = '';
-let result = '';
-
-
+let displayValue = '0';
 
 //number buttons
+
 numBtns.forEach(btn => {
     btn.addEventListener('click', (_btn) => {
-        displayUpdate(btn.innerHTML);
+        if (displayValue == '0') {
+            displayValue = '';
+        }
+        function addNumbersToDisplay(value) {
+            displayValue = displayValue.concat(value);
+            displaySpan.innerHTML = displayValue;
+        }
+        addNumbersToDisplay(btn.innerHTML);
     });
 });
 
-//lets multiple numbers be added to display span
-function displayUpdate(value) {
-    disUpValue = disUpValue.concat(value);
-    displaySpan.innerHTML = disUpValue;
-}
+let firstNumber = null;
+let secondNumber = null;
+//addition button
+document.getElementById('plus').addEventListener('click', () => {
+
+    if (firstNumber != null) {
+        let secondNumber = displayValue;
+        firstNumber = parseInt(firstNumber) + parseInt(secondNumber);
+        displaySpan.innerHTML = firstNumber;
+        displayValue = '';
+
+    } else {
+        firstNumber = displayValue;
+        displayValue = '';
+    }
+    
+});
 
 
 //clear button
 document.getElementById('clear').addEventListener('click', () => {
-    disUpValue = '';
-    displaySpan.innerHTML = '';
-    operating = [];
+    a = null;
+    b = null;
+    displayValue = '0';
+    displaySpan.innerHTML = '0';
 });
 
 //equals button
@@ -34,39 +49,13 @@ document.getElementById('equals').addEventListener('click', () => {
 
 });
 
-//addition button
-document.getElementById('plus').addEventListener('click', () => {
-
-});
-
-
-
-function operate(op, num1, num2) {
-    switch (op) {
-        case 'plus':
-    }
-}
-
-function add(a, b) {
-    return parseInt(a, 10) + parseInt(b, 10);
-}
-
-function subtract() {
-
-}
-
-function multiply() {
-
-}
-
-function divide() {
-
-}
-
 
 
 function init() {
-
+    displaySpan.innerHTML = '0';
 }
 
 init();
+
+
+
