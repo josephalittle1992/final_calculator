@@ -14,6 +14,7 @@ class calc {
         this.value = parseInt(value);
         this.operator = operator;
         this.wasEquals = false;
+        this.previous = null;
     }
 }
 
@@ -22,6 +23,7 @@ function calculate(stack1, stack2) {
     result = eval(stack1.value + ' ' + stack1.operator + ' ' + stack2.value);
     stack1.value = result;
     stack1.operator = stack2.operator;
+    calcStack[0].previous = calcStack[1].value;
     calcStack.pop();
     if (result.toString().length > 18) {
         alert('Result is too large');
@@ -32,19 +34,24 @@ function calculate(stack1, stack2) {
 }
 
 //equals button
+//fix problem when: 20 + 2 = 22 = 44 --->>>> 20 + 2 = 22 = 24
 document.getElementById('equals').addEventListener('click', () => {
-    if (displayedNumber == 0) {
-        console.log('working');
-        displaySpan.innerHTML = eval(calcStack[0].value + ' ' + calcStack[0].operator + ' ' + displaySpan.innerHTML);
+    if (displayedNumber == 0 && calcStack[0].wasEquals == false) {
+        //calcStack[0].previous = calcStack[0].value;
+        displaySpan.innerHTML = eval(displaySpan.innerHTML + ' ' + calcStack[0].operator + ' ' + calcStack[0].value);
         calcStack[0].wasEquals = true;
+    } else if (displayedNumber == 0 && calcStack[0].wasEquals == true) {
+        displaySpan.innerHTML = eval(displaySpan.innerHTML + ' ' + calcStack[0].operator + ' ' + calcStack[0].previous);
     } else {
         calcStack.push(new calc(displayedNumber, calcStack[0].operator));
         displayedNumber = 0;
         if (calcStack.length == 2) {
-        calculate(calcStack[0], calcStack[1]);
+            calculate(calcStack[0], calcStack[1]);
+            calcStack[0].wasEquals = true;
+        }
+        console.log(calcStack);
     }
-    }
-    
+
 
 });
 
@@ -75,15 +82,8 @@ calcBtns.forEach(btn => {
 
 numBtns.forEach(btn => {
     btn.addEventListener('click', (_btn) => {
-        if (calcStack[0] && calcStack[0].wasEquals) {
+        if (calcStack[0] && calcStack[0].wasEquals == true) {
             init();
-            calcStack = [];
-        }
-        // if (calcStack[0] && calcStack[0].operator == null) {
-        //     init();
-        //     calcStack = [];
-        // }
-        if (calcStack[0] && calcStack[0].wasEquals) {
             calcStack = [];
         }
         //if 0 is displayed then start new number
