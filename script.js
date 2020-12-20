@@ -1,6 +1,5 @@
 //Add keyboard functionality
 //Add timeout + clear calculator if result is too large
-//Fix division by 0
 //Fix decimal system, floating #s?
 
 
@@ -14,12 +13,13 @@ class calc {
     constructor(value, operator) {
         this.value = parseInt(value);
         this.operator = operator;
+        this.wasEquals = false;
     }
 }
 
 function calculate(stack1, stack2) {
     let result = null;
-    result = eval(stack1.value + " " + stack1.operator + " " + stack2.value);
+    result = eval(stack1.value + ' ' + stack1.operator + ' ' + stack2.value);
     stack1.value = result;
     stack1.operator = stack2.operator;
     calcStack.pop();
@@ -30,6 +30,23 @@ function calculate(stack1, stack2) {
         displaySpan.innerHTML = result;
     }
 }
+
+//equals button
+document.getElementById('equals').addEventListener('click', () => {
+    if (displayedNumber == 0) {
+        console.log('working');
+        displaySpan.innerHTML = eval(calcStack[0].value + ' ' + calcStack[0].operator + ' ' + displaySpan.innerHTML);
+        calcStack[0].wasEquals = true;
+    } else {
+        calcStack.push(new calc(displayedNumber, calcStack[0].operator));
+        displayedNumber = 0;
+        if (calcStack.length == 2) {
+        calculate(calcStack[0], calcStack[1]);
+    }
+    }
+    
+
+});
 
 calcBtns.forEach(btn => {
     btn.addEventListener('click', (_btn) => {
@@ -45,6 +62,10 @@ calcBtns.forEach(btn => {
             }
             console.log(calcStack);
         }
+        if (calcStack[0] && calcStack[0].wasEquals == true) {
+            calcStack[0].value = displaySpan.innerHTML;
+            calcStack[0].wasEquals = false;
+        }
         if (calcStack.length == 0 && displayedNumber == '0') {
             return;
         }
@@ -54,6 +75,17 @@ calcBtns.forEach(btn => {
 
 numBtns.forEach(btn => {
     btn.addEventListener('click', (_btn) => {
+        if (calcStack[0] && calcStack[0].wasEquals) {
+            init();
+            calcStack = [];
+        }
+        // if (calcStack[0] && calcStack[0].operator == null) {
+        //     init();
+        //     calcStack = [];
+        // }
+        if (calcStack[0] && calcStack[0].wasEquals) {
+            calcStack = [];
+        }
         //if 0 is displayed then start new number
         if (displayedNumber == '0') {
             displaySpan.innerHTML = '';
@@ -78,6 +110,8 @@ document.getElementById('clear').addEventListener('click', () => {
     init();
     calcStack = [];
 });
+
+
 
 //initialize calculator displayed and stored values to 0
 function init() {
