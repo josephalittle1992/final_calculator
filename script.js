@@ -34,15 +34,16 @@ function calculate(stack1, stack2) {
 }
 
 //equals button
-//fix problem when: 20 + 2 = 22 = 44 --->>>> 20 + 2 = 22 = 24
 document.getElementById('equals').addEventListener('click', () => {
     if (displayedNumber == 0 && calcStack[0].wasEquals == false) {
-        //calcStack[0].previous = calcStack[0].value;
+        calcStack[0].previous = calcStack[0].value;
         displaySpan.innerHTML = eval(displaySpan.innerHTML + ' ' + calcStack[0].operator + ' ' + calcStack[0].value);
         calcStack[0].wasEquals = true;
     } else if (displayedNumber == 0 && calcStack[0].wasEquals == true) {
         displaySpan.innerHTML = eval(displaySpan.innerHTML + ' ' + calcStack[0].operator + ' ' + calcStack[0].previous);
-    } else {
+    } else if (!calcStack.length) {
+        displaySpan.innerHTML = displaySpan.innerHTML;
+    }else {
         calcStack.push(new calc(displayedNumber, calcStack[0].operator));
         displayedNumber = 0;
         if (calcStack.length == 2) {
@@ -59,6 +60,13 @@ calcBtns.forEach(btn => {
     btn.addEventListener('click', (_btn) => {
         function cleanCalc() {
             if (displayedNumber == '0') {
+                if (calcStack[0] && calcStack[0].previous) {
+                    calcStack[0].value = calcStack[0].previous;
+                    displaySpan.innerHTML = calcStack[0].previous;
+                } else {
+                    displaySpan.innerHTML = calcStack[0].value;
+                }
+                
                 calcStack[0].operator = btn.innerHTML;
             } else {
                 calcStack.push(new calc(displayedNumber, btn.innerHTML));
