@@ -19,20 +19,7 @@ class calc {
 
 function calculate(stack1, stack2) {
     let result = null;
-    switch (stack1.operator) {
-        case '+':
-            result = stack1.value + stack2.value;
-            break;
-        case '-':
-            result = stack1.value - stack2.value;
-            break;
-        case '*':
-            result = stack1.value * stack2.value;
-            break;
-        case '/':
-            result = stack1.value / stack2.value;
-            break;
-    }
+    result = eval(stack1.value + " " + stack1.operator + " " + stack2.value);
     stack1.value = result;
     stack1.operator = stack2.operator;
     calcStack.pop();
@@ -61,20 +48,7 @@ calcBtns.forEach(btn => {
         if (calcStack.length == 0 && displayedNumber == '0') {
             return;
         }
-        switch (btn.innerHTML) {
-            case '+':
-               cleanCalc();
-                break;
-            case '-':
-                cleanCalc();
-                break;
-            case '/':
-                cleanCalc();
-                break;
-            case '*':
-                cleanCalc();
-                break;
-        }
+        cleanCalc();
     });
 });
 
